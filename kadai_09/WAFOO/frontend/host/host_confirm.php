@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 //1.  DB接続します
 include "../../backend/function.php";
 $pdo = db_con();
