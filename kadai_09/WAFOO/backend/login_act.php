@@ -27,6 +27,7 @@ $val = $stmt->fetch(); //1レコードだけ取得する方法
 //5. 該当レコードがあればSESSIONに値を代入
 if( $val["user_id"] != "" ){ //idが0(数値ない)では無ければ→誰かいる
     $_SESSION["chk_ssid"]  = session_id();  //別のキーをもたせておく OKであれば値をもたせる→IDがあればログインしているといえる
+    $_SESSION["user_id"]  = $val["user_id"];
     $_SESSION["last_name"]      = $val['last_name']; //セッションに代入しておけば、いちいちSQLを入れなくてもセッションから引っ張れる
     header('Location: ../frontend/host/host_form.php');
 }else{

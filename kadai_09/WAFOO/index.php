@@ -53,18 +53,32 @@ if($status==false) {
     <h1><a href="index.php">WAFOO</a></h1>
     <nav>
         <ul>
+            <li><a href="frontend/search/search.php">Search Experience</a></li>
             <li><a href="frontend/host/host_top.php">Become a Host（ホストになる）</a></li>
-            <li><a href="frontend/mypage/sign_up.php">Sign up</a></li>
-            <li><a href="frontend/mypage/login.php">Log in</a></li>
+            <li>
+                <?php if($_SESSION["user_id"] != ""){ ?>
+                <a href="frontend/mypage/mypage.php">My Page</a>
+                <?php } else { ?>
+                <a href="frontend/mypage/sign_up.php">Sign up</a>
+                <?php } ?>
+            </li>
+            <li>
+                <?php if($_SESSION["user_id"] != ""){ ?>
+                <a href="backend/logout.php">Log Out</a>
+                <?php } else { ?>
+                <a href="frontend/mypage/login.php">Log in</a>
+                <?php } ?>
+            </li>
         </ul>
     </nav>
 </header>
 <div class="hero_area">
-    <video src="data/video/top_hero_video.mp4" autoplay poster="posterimage.jpg" muted autoplay loop class="hero-video">
+    <video src="data/video/top_hero_video.mov" autoplay poster="posterimage.jpg" muted autoplay loop class="hero-video">
     </video>
     <p class="hero_catchCopy">Explore Local Japan <br>With Home Made Food</p>
+    <p class="hero_subcatch">Platform for eatting with the local in Japan</p>
 </div>
-<!-- <p><?=$_SESSION['last_name']?>さん、こんにちは</p> -->
+
 <main class="top_main">
     <section>
         <h2>New Experience</h2>

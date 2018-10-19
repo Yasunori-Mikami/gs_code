@@ -94,6 +94,10 @@
             <p><input type="password" name="password" size="64" placeholder="Password"></p>
             <p class=""><input type="submit" value="Sign Up"></p>
         </form>
+        <div class="option_comment">
+            <p>Do you already have an account ?</p>
+            <a href="login.php">Log In</a>
+        </div>
     </section>
 </main>
 <?php include("../common/footertag.html")?>

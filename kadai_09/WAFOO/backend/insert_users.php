@@ -56,12 +56,35 @@ if($status==false){
 }else{
     //５．index.phpへリダイレクト
     //処理が終わったらindex.phpにリダイレクトする
-    header('Location: ../index.php');
+    // header('Location: ../index.php');
 
     //元のページに戻る
     // $uri = $_SERVER['HTTP_REFERER'];
     // header("Location: ".$uri, true, 303);
 
+
+
+    //----Sign inと同時にログインする仕様↓---------------
+    //6. ログイン用のデータ登録SQL作成
+    $sql_login = "SELECT * FROM users WHERE email=:email AND password=:password"; //パスワードとIDが一致、かつ退会してない人
+    $stmt_login = $pdo->prepare($sql_login);
+    $stmt_login->bindValue(':email', $_POST["email"],PDO::PARAM_STR);
+    $stmt_login->bindValue(':password', $_POST["password"],PDO::PARAM_STR);
+    $res = $stmt_login->execute();
+
+    //7. 抽出データ数を取得
+    $val = $stmt_login->fetch(); //1レコードだけ取得する方法
+
+    //8. 該当レコードがあればSESSIONに値を代入
+    if( $val["user_id"] != "" ){ //idが0(数値ない)では無ければ→誰かいる
+        $_SESSION["chk_ssid"]  = session_id();  //別のキーをもたせておく OKであれば値をもたせる→IDがあればログインしているといえる
+        $_SESSION["user_id"]  = $val["user_id"];
+        $_SESSION["last_name"]      = $val['last_name']; //セッションに代入しておけば、いちいちSQLを入れなくてもセッションから引っ張れる
+        header('Location: ../frontend/mypage/mypage.php');
+    }else{
+        //logout処理を経由して全画面へ
+        header('Location: ../frontend/mypage/login.php');
+    }
     exit;
 }
 ?>
